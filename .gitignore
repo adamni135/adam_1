@@ -14,6 +14,13 @@ $RECYCLE.BIN/
 *.msm
 *.msp
 
+#maven project
+*/setting/*
+*/target/*
+*.class
+.classpath
+.project
+
 # Windows shortcuts
 *.lnk
 
