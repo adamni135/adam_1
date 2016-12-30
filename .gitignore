@@ -15,8 +15,9 @@ $RECYCLE.BIN/
 *.msp
 
 #maven project
-*/setting/*
+.setting/*
 */target/*
+*target/*
 *.class
 .classpath
 .project
