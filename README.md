@@ -13,3 +13,5 @@ B>基于专家领域模型思想（DDD\CQRS）及RXjava思想的一种实现
 C>日志打印收集基于ThreadLocal能在大并发场景下支持精准打印，分场景打印，有效解决大并发场景下日志的生成问题
 
 D>各种小工具，如快速UUID生成，URLEncode等
+
+E>可以嫁接在Spring MVC、 Dubbox、或者任何RPC框架上，很好地与C层剥离，无耦合
