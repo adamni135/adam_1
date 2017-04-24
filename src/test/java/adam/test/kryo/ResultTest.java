@@ -1,9 +1,7 @@
 /**
  * 
  */
-package org.springframework.adam.common.bean;
-
-import java.io.Serializable;
+package adam.test.kryo;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
@@ -20,15 +18,17 @@ import com.alibaba.fastjson.JSON;
  * @author user
  *
  */
-public class ResultVo<T> implements Serializable {
+public class ResultTest<T> {
 
-	private static final Log log = LogFactory.getLog(ResultVo.class);
+	private static final Log log = LogFactory.getLog(ResultTest.class);
 
 	private String resultCode = "0"; // 返回代码
 
 	private String resultMsg = ""; // 返回信息
-
+	
 	private transient String latestServiceName = "";
+	
+	private int aaa;
 
 	private T data;
 
@@ -43,7 +43,7 @@ public class ResultVo<T> implements Serializable {
 	 * 
 	 * @param orig
 	 */
-	public void copyResult(ResultVo orig) {
+	public void copyResult(ResultTest orig) {
 		copyResult(orig, null);
 	}
 
@@ -58,7 +58,7 @@ public class ResultVo<T> implements Serializable {
 	 * 
 	 * @param orig
 	 */
-	public void copyResult(ResultVo orig, T defaultData) {
+	public void copyResult(ResultTest orig, T defaultData) {
 		this.resultCode = orig.getResultCode();
 		this.setResultMsg(orig.getResultMsg());
 		if (null != defaultData) {
@@ -89,7 +89,7 @@ public class ResultVo<T> implements Serializable {
 	 * @param orig
 	 * @param defaultData
 	 */
-	public void copyResult(Class<? extends Object> thisClass, String thisResultCode, String thisMessage, ResultVo orig, T defaultData) {
+	public void copyResult(Class<? extends Object> thisClass, String thisResultCode, String thisMessage, ResultTest orig, T defaultData) {
 		this.setResultCode(thisClass, thisResultCode + orig.getResultCode());
 		this.setResultMsg(orig.getResultMsg());
 		if (null != defaultData) {
@@ -106,13 +106,6 @@ public class ResultVo<T> implements Serializable {
 	}
 
 	/**
-	 * @param resultCode
-	 */
-	public void setResultCode(String resultCode) {
-		this.resultCode = resultCode;
-	}
-
-	/**
 	 * setResultCode
 	 * 
 	 * @param thisClass
@@ -120,10 +113,10 @@ public class ResultVo<T> implements Serializable {
 	 */
 	public void setResultCode(Class<? extends Object> thisClass, String resultCode) {
 		if (BaseReslutCodeConstants.CODE_SUCCESS.equals(resultCode) || BaseReslutCodeConstants.CODE_SUCCESS_AND_BREAK.equals(resultCode)) {
-			setResultCode(resultCode);
+			this.resultCode = resultCode;
 			return;
 		}
-		if (!ResultVo.ForceSet.class.equals(thisClass)) {
+		if (!ResultTest.ForceSet.class.equals(thisClass)) {
 			ServiceErrorCode errorCode = thisClass.getAnnotation(ServiceErrorCode.class);
 			if (null != errorCode) {
 				if (BaseReslutCodeConstants.CODE_NOT_SUPPORT.equals(errorCode.value())) {
@@ -138,7 +131,7 @@ public class ResultVo<T> implements Serializable {
 				log.warn("类" + thisClass.getSimpleName() + "要设置@ServiceErrorCode注解规范错误代码");
 			}
 		}
-		setResultCode(resultCode);
+		this.resultCode = resultCode;
 	}
 
 	/**
@@ -217,5 +210,13 @@ public class ResultVo<T> implements Serializable {
 
 	public static class ForceSet {
 
+	}
+
+	public int getAaa() {
+		return aaa;
+	}
+
+	public void setAaa(int aaa) {
+		this.aaa = aaa;
 	}
 }

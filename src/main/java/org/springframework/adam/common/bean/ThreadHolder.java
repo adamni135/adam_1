@@ -39,6 +39,12 @@ public class ThreadHolder {
 		this.requestLogFlag = requestLogFlag;
 	}
 
+	public void copy(ThreadHolder threadHolder) {
+		this.runningAccountId = threadHolder.getRunningAccountId();
+		this.runningAccountFlag = threadHolder.getRunningAccountFlag();
+		this.requestLogFlag = threadHolder.getRequestLogFlag();
+	}
+
 	@Override
 	public String toString() {
 		return "ThreadHolder [runningAccountId=" + runningAccountId + ", runningAccountFlag=" + runningAccountFlag + ", requestLogFlag=" + requestLogFlag + "]";

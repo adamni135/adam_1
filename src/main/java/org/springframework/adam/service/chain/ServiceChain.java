@@ -31,6 +31,7 @@ import org.springframework.adam.common.utils.ThreadLocalHolder;
 import org.springframework.adam.common.utils.TransactionUtil;
 import org.springframework.adam.common.utils.context.SpringContextUtils;
 import org.springframework.adam.service.IService;
+import org.springframework.adam.service.IServiceBefore;
 import org.springframework.adam.service.common.AsynExcutor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
@@ -57,6 +58,8 @@ public class ServiceChain {
 
 	private AtomicBoolean isReady = new AtomicBoolean(false);
 
+	private IServiceBefore serviceBefore;
+
 	public void init() {
 		if (servicesMap == null || servicesMap.size() == 0) {
 			initServiceChain();
@@ -74,6 +77,8 @@ public class ServiceChain {
 		}
 		isReady.set(false);
 
+		IServiceBefore serviceBefore = SpringContextUtils.getSpringBeanByType(IServiceBefore.class);
+		this.serviceBefore = serviceBefore;
 		String[] serviceNames = SpringContextUtils.getSpringBeanNamesByType(IService.class);
 
 		for (String name : serviceNames) {
@@ -166,7 +171,9 @@ public class ServiceChain {
 			doneServiceStack.add(service);
 			Class serviceClass = AdamClassUtils.getTargetClass(service);
 			output.setLatestServiceName(serviceClass.getName());
-			dealService(service, serviceClass, income, output);
+			if (null == this.serviceBefore || this.serviceBefore.dealServiceBefore(service, serviceClass, income, output)) {
+				dealService(service, serviceClass, income, output);
+			}
 			if (!BaseReslutCodeConstants.CODE_SUCCESS.equals(output.getResultCode())) { // success是成功且继续下一步
 				if (!BaseReslutCodeConstants.CODE_SUCCESS_AND_BREAK.equals(output.getResultCode())) { // successAndBreak是成功且但不继续往下走
 					isSuccess = false; // 其它情况均为错误
@@ -183,12 +190,18 @@ public class ServiceChain {
 			Class serviceClass = AdamClassUtils.getTargetClass(service);
 			try {
 				if (isSuccess) {
-					dealSuccess(service, serviceClass, income, output);
+					if (null == this.serviceBefore || this.serviceBefore.dealSuccessBefore(service, serviceClass, income, output)) {
+						dealSuccess(service, serviceClass, income, output);
+					}
 				} else {
-					dealFail(service, serviceClass, income, output);
+					if (null == this.serviceBefore || this.serviceBefore.dealFailBefore(service, serviceClass, income, output)) {
+						dealFail(service, serviceClass, income, output);
+					}
 				}
 			} finally {
-				dealComplate(service, serviceClass, income, output);
+				if (null == this.serviceBefore || this.serviceBefore.dealComplateBefore(service, serviceClass, income, output)) {
+					dealComplate(service, serviceClass, income, output);
+				}
 			}
 		}
 
