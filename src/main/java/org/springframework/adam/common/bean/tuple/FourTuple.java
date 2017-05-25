@@ -28,4 +28,16 @@ public class FourTuple<A, B, C, D> extends ThreeTuple<A, B, C> {
 		this.d = d;
 	}
 
+	@Override
+	public Object get(int i) {
+		Object result = super.get(i);
+		if (null != result) {
+			return result;
+		}
+		if (i == 4) {
+			return d;
+		}
+		return null;
+	}
+
 }

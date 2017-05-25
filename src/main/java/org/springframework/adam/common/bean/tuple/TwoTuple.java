@@ -27,4 +27,16 @@ public class TwoTuple<A, B> extends OneTuple<A> {
 	public void setB(B b) {
 		this.b = b;
 	}
+	
+	@Override
+	public Object get(int i){
+		Object result = super.get(i);
+		if(null != result){
+			return result;
+		}
+		if(i == 2){
+			return b;
+		}
+		return null;
+	}
 }

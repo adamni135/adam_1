@@ -31,7 +31,7 @@ public class KryoDeserialeTest {
 		pool.release(kryo);
 	}
 
-	public static <T extends Serializable> T deserializationObject(Kryo kryo, Class<T> clazz) throws Exception {
+	public static <T> T deserializationObject(Kryo kryo, Class<T> clazz) throws Exception {
 		Input input = new Input(new FileInputStream(KryoSerialeTest.PATH));
 		return kryo.readObject(input, clazz);
 	}

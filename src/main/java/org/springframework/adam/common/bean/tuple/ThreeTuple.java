@@ -28,4 +28,15 @@ public class ThreeTuple<A, B, C> extends TwoTuple<A, B> {
 		this.c = c;
 	}
 
+	@Override
+	public Object get(int i){
+		Object result = super.get(i);
+		if(null != result){
+			return result;
+		}
+		if(i == 3){
+			return c;
+		}
+		return null;
+	}
 }

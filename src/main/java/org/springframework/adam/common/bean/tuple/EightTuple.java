@@ -28,4 +28,15 @@ public class EightTuple<A, B, C, D, E, F, G, H> extends SevenTuple<A, B, C, D, E
 		this.h = h;
 	}
 
+	@Override
+	public Object get(int i) {
+		Object result = super.get(i);
+		if (null != result) {
+			return result;
+		}
+		if (i == 8) {
+			return h;
+		}
+		return null;
+	}
 }

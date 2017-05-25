@@ -28,4 +28,15 @@ public class SixTuple<A, B, C, D, E, F> extends FiveTuple<A, B, C, D, E> {
 		this.f = f;
 	}
 
+	@Override
+	public Object get(int i){
+		Object result = super.get(i);
+		if(null != result){
+			return result;
+		}
+		if(i == 6){
+			return f;
+		}
+		return null;
+	}
 }

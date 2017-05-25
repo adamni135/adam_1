@@ -28,4 +28,15 @@ public class SevenTuple<A, B, C, D, E, F, G> extends SixTuple<A, B, C, D, E, F> 
 		this.g = g;
 	}
 
+	@Override
+	public Object get(int i) {
+		Object result = super.get(i);
+		if (null != result) {
+			return result;
+		}
+		if (i == 7) {
+			return g;
+		}
+		return null;
+	}
 }

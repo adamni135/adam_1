@@ -9,12 +9,7 @@ import java.io.Serializable;
  * @author USER
  *
  */
-public class LogBean implements Serializable {
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+public class LogBean {
 
 	private String runningAccount;
 

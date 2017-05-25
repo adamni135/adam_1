@@ -44,7 +44,7 @@ public class KryoPoolTest {
 		pool.release(kryo);
 	}
 
-	public static <T extends Serializable> T deserializationObject(Kryo kryo, byte[] b, Class<T> clazz) {
+	public static <T> T deserializationObject(Kryo kryo, byte[] b, Class<T> clazz) {
 		Input input = new Input(b);
 		input.close();
 		return kryo.readObject(input, clazz);

@@ -27,4 +27,17 @@ public class OneTuple<A> {
 	public void setA(A a) {
 		this.a = a;
 	}
+
+	public Object get(int i) {
+		if (i == 1) {
+			return a;
+		}
+		return null;
+	}
+
+	@SuppressWarnings("unchecked")
+	public <T> T get(int i, Class<T> clazz) {
+		Object result = this.get(i);
+		return (T) result;
+	}
 }
