@@ -27,7 +27,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class AdamRuleExcutor {
 
-	private static final Pattern BRACKETS = Pattern.compile("\\([^)]*\\)");
+	private static final Pattern BRACKETS = Pattern.compile("\\([^(^)]*\\)");
 
 	private static final String REPLACE_KEEP_STR = "A__";
 	
