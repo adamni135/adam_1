@@ -20,7 +20,7 @@ public class AdamSericalizerTest {
 	 */
 	public static void main(String[] args) throws IOException {
 		String str = "Aa你好啊，～！#￥）%￥@×》《/";
-		byte[] strBytes = AdamSerializer.instance().serialize(str);
+		byte[] strBytes = AdamSerializer.instance(new AdamSerializeFactory()).serialize(str);
 		System.out.println(AdamSerializer.instance().deserialize(strBytes, String.class));
 		LogBean l = new LogBean(str, new Result(), new Result(), "hello");
 		strBytes = AdamSerializer.instance().serialize(l);
