@@ -30,7 +30,7 @@ public class RedisCacheHelper implements CacheHelper {
 
 	@Override
 	public Long del(String key) {
-		if (StringUtils.isEmpty(key)){
+		if (StringUtils.isEmpty(key)) {
 			throw new CacheLockedException("key不能为空");
 		}
 		JedisCluster cluster = redisCore.getJedisCluster();
@@ -75,6 +75,16 @@ public class RedisCacheHelper implements CacheHelper {
 	public Long incrBy(String key, long count) {
 		JedisCluster cluster = redisCore.getJedisCluster();
 		return cluster.incrBy(key, count);
+	}
+
+	@Override
+	public Long expire(String key, long expire) {
+		JedisCluster cluster = redisCore.getJedisCluster();
+		if (expire > 0) {
+			return cluster.pexpire(key, expire);
+		} else {
+			return 0l;
+		}
 	}
 
 }

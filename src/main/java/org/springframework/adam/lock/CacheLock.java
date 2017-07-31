@@ -47,14 +47,16 @@ public class CacheLock {
 	}
 
 	public boolean lock(long timeout, Long expire) {
-		long milliseconds = System.currentTimeMillis();
 		long waitTime = Math.min(timeout, expire) / 8;
+		waitTime = Math.max(waitTime, 1);
+		long milliseconds = System.currentTimeMillis();
 		try {
 			while (System.currentTimeMillis() - milliseconds < timeout) {
 				if (cacheHelper.setnx(this.key, "TRUE", expire)) {
 					return true;
 				}
-				justWait(++waitTime);
+				justWait(waitTime);
+				waitTime = 2 * waitTime;
 			}
 		} catch (Exception e) {
 			throw new CacheLockedException("Locking error", e);
@@ -72,5 +74,9 @@ public class CacheLock {
 		} catch (Exception e) {
 			throw new CacheLockedException(e);
 		}
+	}
+
+	public Long expire(long expire) {
+		return cacheHelper.expire(this.key, expire);
 	}
 }

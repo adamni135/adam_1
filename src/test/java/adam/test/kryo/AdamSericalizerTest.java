@@ -6,6 +6,7 @@ package adam.test.kryo;
 import java.io.IOException;
 
 import org.junit.runner.Result;
+import org.springframework.adam.common.serialzer.AdamSerializeFactory;
 import org.springframework.adam.common.serialzer.AdamSerializer;
 
 /**

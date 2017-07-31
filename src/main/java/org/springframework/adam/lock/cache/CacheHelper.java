@@ -17,4 +17,6 @@ public interface CacheHelper {
 	public Long incr(String key);
 
 	public Long incrBy(String key, long count);
+
+	public Long expire(String key, long expire);
 }
