@@ -66,4 +66,33 @@ public class ThreadLocalHolder {
 		contextHolder.set(threadHolder);
 	}
 
+	public static String getRemark() {
+		if (null == contextHolder.get()) {
+			initRunningAccount();
+		}
+		return contextHolder.get().getRemark();
+	}
+	
+	public static void resetRemark() {
+		if (null == contextHolder.get()) {
+			initRunningAccount();
+		}
+		contextHolder.get().setRemark("");
+	}
+
+	public static void setRemark(String remark) {
+		if (null == contextHolder.get()) {
+			initRunningAccount();
+		}
+		contextHolder.get().setRemark(remark);
+	}
+
+	public static void appendRemark(String remark) {
+		if (null == contextHolder.get()) {
+			initRunningAccount();
+		}
+		String oldRemark = contextHolder.get().getRemark();
+		contextHolder.get().setRemark(oldRemark + remark);
+	}
+
 }

@@ -15,6 +15,8 @@ public class ThreadHolder {
 
 	private Integer requestLogFlag;
 
+	private String remark;
+
 	public String getRunningAccountId() {
 		return runningAccountId;
 	}
@@ -39,14 +41,28 @@ public class ThreadHolder {
 		this.requestLogFlag = requestLogFlag;
 	}
 
+	public String getRemark() {
+		return remark;
+	}
+
+	public void setRemark(String remark) {
+		this.remark = remark;
+	}
+
 	public void copy(ThreadHolder threadHolder) {
 		this.runningAccountId = threadHolder.getRunningAccountId();
 		this.runningAccountFlag = threadHolder.getRunningAccountFlag();
 		this.requestLogFlag = threadHolder.getRequestLogFlag();
+		this.remark = threadHolder.getRemark();
+	}
+
+	public void append(ThreadHolder threadHolder) {
+		this.remark = this.remark + threadHolder.getRemark();
 	}
 
 	@Override
 	public String toString() {
-		return "ThreadHolder [runningAccountId=" + runningAccountId + ", runningAccountFlag=" + runningAccountFlag + ", requestLogFlag=" + requestLogFlag + "]";
+		return "ThreadHolder [runningAccountId=" + runningAccountId + ", runningAccountFlag=" + runningAccountFlag + ", requestLogFlag=" + requestLogFlag + ", remark=" + remark + "]";
 	}
+
 }
